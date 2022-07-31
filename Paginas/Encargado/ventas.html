@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas</title>
+</head>
+<body>
+    <section id="">
+        <p>Consulta de todas las ventas</p>
+        <p>Ganancia: <span id="gananciaVentas"></span></p>
+    </section>
+    <section id="contentGenerarGrafico">
+        <form action="">
+            <label for="generarGrafico">
+                <input type="checkbox" name="generarGrafico" id="generarGrafico"> Generar grafico
+                <br>
+            </label>
+            <label for="tipoGrafica">
+                Tipo de grafico 
+                <select name="tipoGrafica" id="tipoGrafica">
+                    <option value="tgBarras">Barras</option>
+                    <option value="tgLinea">Linea</option>
+                </select>
+                <br>
+            </label>
+            <label for="tipoGraficaInfo">
+                ¿Que desea saber?
+                <select name="tipoGraficaInfo" id="tipoGraficaInfo">
+                    <option value="cantidadVsSucursal">Cantidad vs Sucursal</option><!-- Cantidad de productos vendidos en cada sucursal -->
+                    <option value="cantidadVsFecha">Cantidad vs Fecha de venta</option><!-- Cantidad de productos vendidos por dia -->
+                    <option value="cantidadVsProducto">Cantidad vs Producto</option><!-- Cantidad de productos vendidos -->
+                </select>
+            </label>
+            <p id="infoGrafica">*</p>
+            <input type="submit" value="Generar grafico">
+        </form>
+    </section>
+</body>
+</html>
