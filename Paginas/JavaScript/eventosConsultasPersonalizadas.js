@@ -1,3 +1,4 @@
+
 //Consultas por periodo
 var consulPorPeriodo = document.getElementById("consulPorPeriodo");
 var periodoDesde = document.getElementById("periodoDesde");
@@ -47,11 +48,93 @@ consulPorPordMenosVend.disabled = true;
 btnCancelar.disabled = true;
 btnConsultar.disabled = true;
 
-/*Funcion para activar los botones*/
-function activarBotnes(){
-
+var arrElementosTienda = [cualTienda, consulPorMun, consulPorEnti, cualMun, cualEntidad];
+var arrElementosProducto = [cualProducto, consulPorTipoProd, consulPorProdMasVend, consulPorPordMenosVend, cualTipoProducto];
+var arrCheckboxTienda = [cualTienda, consulPorMun, consulPorEnti];
+var arrCheckboxProducto = [cualProducto, consulPorTipoProd, consulPorProdMasVend, consulPorPordMenosVend];
+var arrCalendario = [periodoDesde, periodoHasta];
+/*
+Funcion para activar/desactivar los chexboxes o calendarios
+1->Activar
+2->Desactivar
+*/
+function activarDesctivarCheckboxesCalendarios(array, bandera){
+    if(bandera == 1){
+        //Activar
+        for(var elemnto of array){
+            elemnto.disabled = false;
+        }
+    } else {
+        //Desactivar
+        for(var elemnto of array){
+            elemnto.disabled = true;
+        }
+    }
 }
 
-consulPorPeriodo.onchange = function(){
+//Desactivamos los elementos de una consulta
+function desactivarElementos(array){
+    for(var elemnto of array){
+        elemnto.disabled = true;
+    }
+}
 
+/*
+Funcion para desctivar las listas
+checkbox -> Indica si hay que activar o desactivar
+lista -> Es la lista que activaremos o desactivaremos
+*/
+function activarDesactivarListas(checkbox, lista){
+    if(checkbox.checked === true){
+        lista.disabled = false;
+    } else {
+        lista.disabled = true;
+    }
+}
+
+//Evento para el checkbox del periodo
+consulPorPeriodo.onchange = function(){
+    if(consulPorPeriodo.checked === true){
+        //Activamos los calendarios de la seccion del periodo
+        activarDesctivarCheckboxesCalendarios(arrCalendario, 1);
+    } else {
+        //Desactivamos los calendarios de la seccion del periodo
+        activarDesctivarCheckboxesCalendarios(arrCalendario, 0);
+    }
 };
+
+//Evento para el chexkbox de la tienda
+consulPorTienda.onchange = function(){
+    if(consulPorTienda.checked === true){
+        //Activamos los checkboxes de la seccion de la tienda
+        activarDesctivarCheckboxesCalendarios(arrCheckboxTienda, 1);
+    } else {
+        //Desactivamos toda la seccion de la tienda
+        desactivarElementos(arrElementosTienda);
+    }
+}
+
+//Evento para el checkbox de la para la consulta por entidad
+consulPorEnti.onchange = function(){
+    activarDesactivarListas(consulPorEnti, cualEntidad);
+}
+
+//Evento para el checkbox de la para la consulta por municipio/alcaldia
+consulPorMun.onchange = function(){
+    activarDesactivarListas(consulPorMun, cualMun);
+}
+
+//Evento para el checkbox del producto
+consulPorProducto.onchange = function(){
+    if(consulPorProducto.checked === true){
+        activarDesctivarCheckboxesCalendarios(arrCheckboxProducto, 1)
+    } else {
+        desactivarElementos(arrElementosProducto);
+    }
+}
+
+//Evento para el checkbox de la consulta por tipo de pruducto
+consulPorTipoProd.onchange = function(){
+    activarDesactivarListas(consulPorTipoProd, cualTipoProducto);
+}
+
