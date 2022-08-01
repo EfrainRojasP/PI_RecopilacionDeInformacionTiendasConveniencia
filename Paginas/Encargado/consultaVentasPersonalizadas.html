@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de ventas personalizadas</title>
+</head>
+<body>
+    <p>Realizar consulta por: </p>
+    <section id="tipoConsulta">
+        <form action="">
+            <label for="consulPorPeriodo">
+                <input type="checkbox" name="consulPorPeriodo" id="consulPorPeriodo" value="tiempo"> Periodo de tiempo
+                <br>
+            </label>
+            <label for="periodoDesde">
+                Desde: <input type="date" name="periodoDesde" id="periodoDesde">
+            </label>
+            <label for="periodoHasta">
+                Hasta: <input type="date" name="periodoHasta" id="periodoHasta">
+            </label>
+            <br>
+            <label for="consulPorTienda">
+                <input type="checkbox" name="consulPorTienda" id="consulPorTienda" value="tienda"> Tienda
+            </label>
+            <label for="cualTienda">
+                <select name="cualTienda" id="cualTienda" multiple>
+                    <option value="tiendaTodas">Todas</option>
+                </select>
+            </label>
+            <label for="consulPorMunAlcadia">
+                <input type="checkbox" name="consulPorMunAlcadia" id="consulPorMunAlcadia" value="munAlca">Municipio/Alcaldia
+            </label>
+            <label for="cualMunicipioAlca">
+                <select name="cualMunicipioAlca" id="cualMunicipioAlca" multiple>
+                    <option value="munAlTods">Todos</option>
+                </select>
+            </label>
+            <label for="consulPorEntidad">
+                <input type="checkbox" name="consulPorEntidad" id="consulPorEntidad">
+            </label>
+            <label for="cualEntidad">
+                <select name="cualEntidad" id="cualEntidad"multiple>
+                    <option value="entiTodas">Todas</option>
+                </select>
+            </label>
+            <br>
+            <label for="consulPorProducto">
+                <input type="checkbox" name="consulPorProducto" id="consulPorProducto" value="producto"> Producto
+            </label>
+            <label for="cualProducto">
+                <select name="cualProducto" id="cualProducto" multiple>
+                    <option value="todosProd">Todos</option>
+                </select>
+            </label>
+            <label for="consulPorTipoProducto">
+                <input type="checkbox" name="consulPorTipoProducto" id="consulPorTipoProducto" value="tipoProd"> Tipo de producto
+            </label>
+            <label for="cualTipoProd">
+                <select multiple name="cualTipoProd" id="cualTipoProd">
+                    <option value="todosTipoProd">Todos</option>
+                </select>
+            </label>
+            <label for="consulPorPruductoMasVendido">
+                <input type="checkbox" name="consulPorPruductoMasVendido" id="consulPorPruductoMasVendido" value="prodMasVendido"> Productos mas vendidos
+            </label>
+            <label for="consulPorPruductoMenosVendido">
+                <input type="checkbox" name="consulPorPruductoMenosVendido" id="consulPorPruductoMenosVendido" value="prodMenosVendido"> Productos menos vendidos
+            </label>
+            <p id="contenidoConsulta"></p>
+            <button type="submit" id="hacerConsulta">Consultar</button><button type="reset" id="cancelarConsulta">Cancelar</button>
+        </form>
+    </section>
+</body>
+</html>
