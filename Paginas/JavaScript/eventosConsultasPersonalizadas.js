@@ -107,6 +107,18 @@ function activarDesactivarConsulta(){
     }
 }
 
+//Nos muestra las opciones que el usuario escogio
+//retun -> Un arreglo de las opciones seleccionadas
+function opcionesSeleccionadas(select){
+    var arrOpciones = [];
+    for(var option of select.options){
+        if(option.selected){
+            arrOpciones.push(option.text);
+        }
+    }
+    return arrOpciones;
+}
+
 //Evento para el checkbox del periodo
 consulPorPeriodo.onchange = function(){
     if(consulPorPeriodo.checked === true){
@@ -120,6 +132,7 @@ consulPorPeriodo.onchange = function(){
         activarDesactivarConsulta();
     }
 };
+
 
 //Evento para el chexkbox de la tienda
 consulPorTienda.onchange = function(){
@@ -159,3 +172,75 @@ consulPorProducto.onchange = function(){
 consulPorTipoProd.onchange = function(){
     activarDesactivarListas(consulPorTipoProd, cualTipoProducto);
 };
+
+/*Obtenemos los datos del formulario*/
+periodoDesde.onchange = function(){
+    
+}
+
+class ConsultaParametros{
+    porPeriodo = [];
+    porTienda = [];
+    porMunAlca = [];
+    porEntidad = [];
+    porProducto = [];
+    porTipoProd = [];
+    porProdMas;
+    porPordMenos;
+}
+
+var consultar = new ConsultaParametros;
+
+/*
+0 -> Elemento calenadario
+1 -> Elemento checkbox
+*/
+function verificarConsulta(elemento, elementoLista, tipoElemento){
+    if(tipoElemento == 0){
+        if(elemento.value.length == 0){
+            alert("Seleccione una fecha");
+            return 0;
+        }
+    } else {
+        if(elemento.checked === true){
+            if(elementoLista.value.length === 0){
+                alert("Seleccione un elemento de la lista");
+                return 0;
+            }
+        }
+    }
+}
+
+
+
+
+btnConsultar.onclick = function(){
+    console.log(opcionesSeleccionadas(cualEntidad));
+    if(consulPorPeriodo.checked === true){
+        if(verificarConsulta(periodoDesde, 0, 0) == 0 || verificarConsulta(periodoHasta, 0, 0) == 0){
+            return 0;
+        } else {
+            console.log("Entro");
+            consultar.porPeriodo.push(periodoDesde.value);
+            consultar.porPeriodo.push(periodoHasta.value);
+        }
+    }
+    if(consulPorTienda.checked === true){
+        if(verificarConsulta(consulPorTienda, cualTienda, 1) == 0 || verificarConsulta(consulPorMun, cualMun, 1) == 0 || verificarConsulta(consulPorEnti, cualEntidad, 1) == 0){
+            return 0;
+        } else {
+            
+        }
+    }
+    if(consulPorProducto.checked === true){
+        if(verificarConsulta(consulPorProducto, cualProducto, 1) == 0 || verificarConsulta(consulPorTipoProd, cualTipoProducto, 1) == 0){ 
+            return 0;
+        } else {
+
+        }
+        
+    }
+    console.log(consultar);
+    alert("Espera");
+}
+
