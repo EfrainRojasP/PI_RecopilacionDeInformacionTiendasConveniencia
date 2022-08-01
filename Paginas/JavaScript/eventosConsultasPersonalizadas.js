@@ -206,7 +206,7 @@ function llenarConsultarParametros(elementoLista, elemento){
         if(elementoLista.id == "cualTienda"){
             consultar.porTienda = [];
             consultar.porTienda = opcionesSeleccionadas(elementoLista);
-        } else if (elementoLista.id == "cualMun"){
+        } else if (elementoLista.id == "cualMunicipioAlca"){
             consultar.porMunAlca = [];
             consultar.porMunAlca = opcionesSeleccionadas(elementoLista);
         } else if (elementoLista.id == "cualEntidad"){
@@ -235,10 +235,11 @@ function llenarConsultarParametros(elementoLista, elemento){
 /*
 Funcion que verfica si los campos requeridos son correctos y si son correctos añade su valor a la clase
 Elemento -> El elemento html
-Elmento lista -> Indica si el elemento es una lista seleccionable
+Elmento lista -> Indica si el elemento es una lista seleccionable o un checkbox
 Tipo elemento:
 0 -> Elemento calenadario
 1 -> Elemento checkbox
+2 -> Pasaremos dos checkboxes
 */
 function verificarConsulta(elemento, elementoLista, tipoElemento){
     if(tipoElemento == 0){
@@ -246,7 +247,7 @@ function verificarConsulta(elemento, elementoLista, tipoElemento){
             alert("Seleccione una fecha");
             return 0;
         }
-    } else {
+    } else if (tipoElemento == 1) {
         if(elemento.checked === true){
             if(elementoLista.value.length === 0){
                 alert("Seleccione un elemento de la lista");
@@ -255,11 +256,27 @@ function verificarConsulta(elemento, elementoLista, tipoElemento){
                 llenarConsultarParametros(elementoLista, 0);
             }
         }
+    } else if (tipoElemento == 2){
+        if(elemento.checked === true && elementoLista.checked === true){
+            alert ("Solo pude escoger: Productos mas vendidos o Productos menos vendidos" + "\n" + "No ambos")
+        }
     }
 }
 
+consulPorPordMenosVend.onchange = function(){
+    if (consulPorProdMasVend.checked === true){
+        alert("Ya esta consultando por producto mas venedio, solo se puede escoger una opcion");
+        consulPorPordMenosVend.checked = false;
+    }
+    
+}
 
-
+consulPorProdMasVend.onchange = function(){
+    if (consulPorPordMenosVend.checked === true){
+        alert("Ya esta consultando por producto menos venedio, solo se puede escoger una opcion");
+        consulPorProdMasVend.checked = false;
+    }
+}
 
 btnConsultar.onclick = function(){
     console.log(opcionesSeleccionadas(cualEntidad));
@@ -273,15 +290,21 @@ btnConsultar.onclick = function(){
         }
     }
     if(consulPorTienda.checked === true){
-        if(verificarConsulta(consulPorTienda, cualTienda, 1) == 0 || verificarConsulta(consulPorMun, cualMun, 1) == 0 || verificarConsulta(consulPorEnti, cualEntidad, 1) == 0){
+        if(verificarConsulta(consulPorTienda, cualTienda, 1) == 0){
             return 0;
-        } 
+        }
+        if(verificarConsulta(consulPorMun, cualMun, 1) == 0){
+            return 0;
+        }
+        if(verificarConsulta(consulPorEnti, cualEntidad, 1) == 0){
+            return 0;
+        }
     }
     if(consulPorProducto.checked === true){
         if(verificarConsulta(consulPorProducto, cualProducto, 1) == 0 || verificarConsulta(consulPorTipoProd, cualTipoProducto, 1) == 0){ 
             return 0;
         }
-        if(verificarConsulta(consulPorProducto, consulPorProdMasVend, 1) == 0 && verificarConsulta(consulPorProducto, consulPorProdMasVend, 1) == 0){
+        if(verificarConsulta(consulPorProdMasVend, consulPorProdMasVend, 1) == 0){
             return 0;
         }
     }
