@@ -43,7 +43,7 @@ infoGrafica.onchange = function(){
     }
     console.log(opcionGrafica.value + " " + opcionGrafica.text + " " + indexOpcion);
 };
-console.log("*"+ opcionGrafica.value + " " + opcionGrafica.text + " " + indexOpcion);
+
 //Vilidamos que el usuario no escoja campos vacios
 btnGenerarGrafica.onclick = function(){
     if(tipoGrafica.selectedIndex == 0){
