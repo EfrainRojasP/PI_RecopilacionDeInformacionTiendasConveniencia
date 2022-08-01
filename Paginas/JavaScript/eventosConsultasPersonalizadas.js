@@ -61,6 +61,7 @@ Funcion para activar/desactivar los chexboxes o calendarios
 function activarDesctivarCheckboxesCalendarios(array, bandera){
     if(bandera == 1){
         //Activar
+        array[0].setAttribute("required", "");
         for(var elemnto of array){
             elemnto.disabled = false;
         }
@@ -87,8 +88,22 @@ lista -> Es la lista que activaremos o desactivaremos
 function activarDesactivarListas(checkbox, lista){
     if(checkbox.checked === true){
         lista.disabled = false;
+        lista.setAttribute("required", "");
     } else {
         lista.disabled = true;
+    }
+}
+
+//Funcion para activar o desctivar el boton de consultar y cancelar.
+//Solo se activan los botones cuando las alguna de las casillas de periodo, tienda o producto son activadas
+function activarDesactivarConsulta(){
+    var prender;
+    if(consulPorPeriodo.checked === false && consulPorTienda.checked === false && consulPorProducto.checked === false){
+        btnConsultar.disabled = true;
+        btnCancelar.disabled = true;
+    } else {
+        btnConsultar.disabled = false;
+        btnCancelar.disabled = false;
     }
 }
 
@@ -97,9 +112,12 @@ consulPorPeriodo.onchange = function(){
     if(consulPorPeriodo.checked === true){
         //Activamos los calendarios de la seccion del periodo
         activarDesctivarCheckboxesCalendarios(arrCalendario, 1);
+        arrCalendario[1].setAttribute("required", "");
+        activarDesactivarConsulta();
     } else {
         //Desactivamos los calendarios de la seccion del periodo
         activarDesctivarCheckboxesCalendarios(arrCalendario, 0);
+        activarDesactivarConsulta();
     }
 };
 
@@ -108,9 +126,11 @@ consulPorTienda.onchange = function(){
     if(consulPorTienda.checked === true){
         //Activamos los checkboxes de la seccion de la tienda
         activarDesctivarCheckboxesCalendarios(arrCheckboxTienda, 1);
+        activarDesactivarConsulta();
     } else {
         //Desactivamos toda la seccion de la tienda
         desactivarElementos(arrElementosTienda);
+        activarDesactivarConsulta();
     }
 }
 
@@ -127,14 +147,15 @@ consulPorMun.onchange = function(){
 //Evento para el checkbox del producto
 consulPorProducto.onchange = function(){
     if(consulPorProducto.checked === true){
-        activarDesctivarCheckboxesCalendarios(arrCheckboxProducto, 1)
+        activarDesctivarCheckboxesCalendarios(arrCheckboxProducto, 1);
+        activarDesactivarConsulta();
     } else {
         desactivarElementos(arrElementosProducto);
+        activarDesactivarConsulta();
     }
 }
 
 //Evento para el checkbox de la consulta por tipo de pruducto
 consulPorTipoProd.onchange = function(){
     activarDesactivarListas(consulPorTipoProd, cualTipoProducto);
-}
-
+};
