@@ -179,12 +179,12 @@ periodoDesde.onchange = function(){
 }
 
 class ConsultaParametros{
-    porPeriodo = [];
-    porTienda = [];
-    porMunAlca = [];
-    porEntidad = [];
-    porProducto = [];
-    porTipoProd = [];
+    porPeriodo;
+    porTienda;
+    porMunAlca;
+    porEntidad;
+    porProducto;
+    porTipoProd;
     porProdMas;
     porPordMenos;
 }
@@ -192,6 +192,51 @@ class ConsultaParametros{
 var consultar = new ConsultaParametros;
 
 /*
+Llena las propiedades de la clase ConsultaParametros
+elementoLista:
+    0 -> No pasaremos un elemento de tipo selected
+    elementoLista -> Pasamos un elemento de tipo selected
+
+elemento:
+    0 -> No pasaremos un elemento de tipo chekbox
+    elemento -> Pasamos un elemento de tipo checkbox
+*/
+function llenarConsultarParametros(elementoLista, elemento){
+    if(elemento == 0){
+        if(elementoLista.id == "cualTienda"){
+            consultar.porTienda = [];
+            consultar.porTienda = opcionesSeleccionadas(elementoLista);
+        } else if (elementoLista.id == "cualMun"){
+            consultar.porMunAlca = [];
+            consultar.porMunAlca = opcionesSeleccionadas(elementoLista);
+        } else if (elementoLista.id == "cualEntidad"){
+            consultar.porEntidad = [];
+            consultar.porEntidad = opcionesSeleccionadas(elementoLista);
+        } else if (elementoLista.id = "cualProducto"){
+            consultar.porProducto = [];
+            consultar.porProducto = opcionesSeleccionadas(elementoLista);
+        } else if (elementoLista.id == "cualTipoProd"){
+            consultar.porTipoProd = [];
+            consultar.porTipoProd = opcionesSeleccionadas(elementoLista);
+        } 
+    }
+
+    if(elementoLista == 0){
+        console.log("hola1" + elemento.id)
+        if(elemento.id == "consulPorPruductoMasVendido"){
+            console.log("hola2")
+            consultar.porProdMas = true;
+        } else if (elemento.id == "consulPorPruductoMenosVendido"){
+            consultar.porPordMenos = true;
+        }
+    } 
+}
+
+/*
+Funcion que verfica si los campos requeridos son correctos y si son correctos añade su valor a la clase
+Elemento -> El elemento html
+Elmento lista -> Indica si el elemento es una lista seleccionable
+Tipo elemento:
 0 -> Elemento calenadario
 1 -> Elemento checkbox
 */
@@ -206,6 +251,8 @@ function verificarConsulta(elemento, elementoLista, tipoElemento){
             if(elementoLista.value.length === 0){
                 alert("Seleccione un elemento de la lista");
                 return 0;
+            } else {
+                llenarConsultarParametros(elementoLista, 0);
             }
         }
     }
@@ -220,7 +267,7 @@ btnConsultar.onclick = function(){
         if(verificarConsulta(periodoDesde, 0, 0) == 0 || verificarConsulta(periodoHasta, 0, 0) == 0){
             return 0;
         } else {
-            console.log("Entro");
+            consultar.porPeriodo = [];
             consultar.porPeriodo.push(periodoDesde.value);
             consultar.porPeriodo.push(periodoHasta.value);
         }
@@ -228,17 +275,15 @@ btnConsultar.onclick = function(){
     if(consulPorTienda.checked === true){
         if(verificarConsulta(consulPorTienda, cualTienda, 1) == 0 || verificarConsulta(consulPorMun, cualMun, 1) == 0 || verificarConsulta(consulPorEnti, cualEntidad, 1) == 0){
             return 0;
-        } else {
-            
-        }
+        } 
     }
     if(consulPorProducto.checked === true){
         if(verificarConsulta(consulPorProducto, cualProducto, 1) == 0 || verificarConsulta(consulPorTipoProd, cualTipoProducto, 1) == 0){ 
             return 0;
-        } else {
-
         }
-        
+        if(verificarConsulta(consulPorProducto, consulPorProdMasVend, 1) == 0 && verificarConsulta(consulPorProducto, consulPorProdMasVend, 1) == 0){
+            return 0;
+        }
     }
     console.log(consultar);
     alert("Espera");
