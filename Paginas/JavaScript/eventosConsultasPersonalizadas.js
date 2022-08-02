@@ -1,3 +1,17 @@
+/*Creamos una clase para la consulta de parametros, esto luego lo pasaremos como JSON*/
+class ConsultaParametros{
+    porPeriodo;
+    porTienda;
+    porMunAlca;
+    porEntidad;
+    porProducto;
+    porTipoProd;
+    porProdMas;
+    porPordMenos;
+}
+
+//Apuntador a la calse
+var consultar = new ConsultaParametros();
 
 //Consultas por periodo
 var consulPorPeriodo = document.getElementById("consulPorPeriodo");
@@ -28,6 +42,8 @@ var consulPorPordMenosVend = document.getElementById("consulPorPruductoMenosVend
 var btnConsultar = document.getElementById("hacerConsulta");
 var btnCancelar = document.getElementById("cancelarConsulta")
 
+//Arreglo con el cual desactivamos elemento
+//var arrDesactivarElemento = [periodoDesde, periodoHasta, cualTienda, consulPorMun, cualMun, consulPorEnti, ];
 //Desactivamos los siguientes elemento
 //Desactivasmos los elementos del periodo
 periodoDesde.disabled = true;
@@ -47,6 +63,7 @@ consulPorPordMenosVend.disabled = true;
 //Desactivamos los botones
 btnCancelar.disabled = true;
 btnConsultar.disabled = true;
+
 
 var arrElementosTienda = [cualTienda, consulPorMun, consulPorEnti, cualMun, cualEntidad];
 var arrElementosProducto = [cualProducto, consulPorTipoProd, consulPorProdMasVend, consulPorPordMenosVend, cualTipoProducto];
@@ -119,6 +136,84 @@ function opcionesSeleccionadas(select){
     return arrOpciones;
 }
 
+/*
+Llena las propiedades de la clase ConsultaParametros
+elementoLista:
+    0 -> No pasaremos un elemento de tipo selected
+    elementoLista -> Pasamos un elemento de tipo selected
+
+elemento:
+    0 -> No pasaremos un elemento de tipo chekbox
+    elemento -> Pasamos un elemento de tipo checkbox
+*/
+function llenarConsultarParametros(elementoLista, elemento){
+    if(elemento == 0){
+        if(elementoLista.id == "cualTienda"){
+            consultar.porTienda = [];
+            consultar.porTienda = opcionesSeleccionadas(elementoLista);
+        } else if (elementoLista.id == "cualMunicipioAlca"){
+            consultar.porMunAlca = [];
+            consultar.porMunAlca = opcionesSeleccionadas(elementoLista);
+        } else if (elementoLista.id == "cualEntidad"){
+            consultar.porEntidad = [];
+            consultar.porEntidad = opcionesSeleccionadas(elementoLista);
+        } else if (elementoLista.id == "cualProducto"){
+            consultar.porProducto = [];
+            consultar.porProducto = opcionesSeleccionadas(elementoLista);
+        } else if (elementoLista.id == "cualTipoProd"){
+            consultar.porTipoProd = [];
+            consultar.porTipoProd = opcionesSeleccionadas(elementoLista);
+        } 
+    }
+
+    if(elementoLista == 0){
+        if(elemento.id == "consulPorPruductoMasVendido"){
+            consultar.porProdMas = true;
+        } else if (elemento.id == "consulPorPruductoMenosVendido"){
+            consultar.porPordMenos = true;
+        }
+    } 
+}
+
+/*
+Funcion que verfica si los campos requeridos son correctos y si son correctos añade su valor a la clase
+Elemento -> El elemento html
+Elmento lista -> Indica si el elemento es una lista seleccionable o un checkbox
+Tipo elemento:
+0 -> Elemento calenadario
+1 -> Elemento checkbox
+2 -> Pasaremos dos checkboxes
+*/
+function verificarConsulta(elemento, elementoLista, tipoElemento){
+    console.log("Entrado con " + elemento.id + " " + elementoLista.id);
+    if(tipoElemento == 0){
+        if(elemento.value.length == 0){
+            alert("Seleccione una fecha");
+            return 0;
+        }
+    } else if (tipoElemento == 1) {
+        if(elemento.checked === true){
+            if(elementoLista.value.length === 0){
+                alert("Seleccione un elemento de la lista");
+                return 0;
+            } else {
+                llenarConsultarParametros(elementoLista, 0);
+            }
+        }
+    } else if (tipoElemento == 2){
+        if(elemento.checked === true && elementoLista.checked === true){
+            alert ("Solo pude escoger: Productos mas vendidos o Productos menos vendidos" + "\n" + "No ambos")
+            elemento.checked = false;
+            elementoLista.checked = false;
+        }
+        if(elemento.checked === true && elementoLista.checked === false){
+            llenarConsultarParametros(0, elemento);
+        } else if (elemento.checked === false && elementoLista.checked === true){
+            llenarConsultarParametros(0, elementoLista);
+        }
+    }
+}
+
 //Evento para el checkbox del periodo
 consulPorPeriodo.onchange = function(){
     if(consulPorPeriodo.checked === true){
@@ -173,96 +268,6 @@ consulPorTipoProd.onchange = function(){
     activarDesactivarListas(consulPorTipoProd, cualTipoProducto);
 };
 
-/*Obtenemos los datos del formulario*/
-periodoDesde.onchange = function(){
-    
-}
-
-class ConsultaParametros{
-    porPeriodo;
-    porTienda;
-    porMunAlca;
-    porEntidad;
-    porProducto;
-    porTipoProd;
-    porProdMas;
-    porPordMenos;
-}
-
-var consultar = new ConsultaParametros;
-
-/*
-Llena las propiedades de la clase ConsultaParametros
-elementoLista:
-    0 -> No pasaremos un elemento de tipo selected
-    elementoLista -> Pasamos un elemento de tipo selected
-
-elemento:
-    0 -> No pasaremos un elemento de tipo chekbox
-    elemento -> Pasamos un elemento de tipo checkbox
-*/
-function llenarConsultarParametros(elementoLista, elemento){
-    if(elemento == 0){
-        if(elementoLista.id == "cualTienda"){
-            consultar.porTienda = [];
-            consultar.porTienda = opcionesSeleccionadas(elementoLista);
-        } else if (elementoLista.id == "cualMunicipioAlca"){
-            consultar.porMunAlca = [];
-            consultar.porMunAlca = opcionesSeleccionadas(elementoLista);
-        } else if (elementoLista.id == "cualEntidad"){
-            consultar.porEntidad = [];
-            consultar.porEntidad = opcionesSeleccionadas(elementoLista);
-        } else if (elementoLista.id = "cualProducto"){
-            consultar.porProducto = [];
-            consultar.porProducto = opcionesSeleccionadas(elementoLista);
-        } else if (elementoLista.id == "cualTipoProd"){
-            consultar.porTipoProd = [];
-            consultar.porTipoProd = opcionesSeleccionadas(elementoLista);
-        } 
-    }
-
-    if(elementoLista == 0){
-        console.log("hola1" + elemento.id)
-        if(elemento.id == "consulPorPruductoMasVendido"){
-            console.log("hola2")
-            consultar.porProdMas = true;
-        } else if (elemento.id == "consulPorPruductoMenosVendido"){
-            consultar.porPordMenos = true;
-        }
-    } 
-}
-
-/*
-Funcion que verfica si los campos requeridos son correctos y si son correctos añade su valor a la clase
-Elemento -> El elemento html
-Elmento lista -> Indica si el elemento es una lista seleccionable o un checkbox
-Tipo elemento:
-0 -> Elemento calenadario
-1 -> Elemento checkbox
-2 -> Pasaremos dos checkboxes
-*/
-function verificarConsulta(elemento, elementoLista, tipoElemento){
-    if(tipoElemento == 0){
-        if(elemento.value.length == 0){
-            alert("Seleccione una fecha");
-            return 0;
-        }
-    } else if (tipoElemento == 1) {
-        if(elemento.checked === true){
-            if(elementoLista.value.length === 0){
-                alert("Seleccione un elemento de la lista");
-                return 0;
-            } else {
-                llenarConsultarParametros(elementoLista, 0);
-            }
-        }
-    } else if (tipoElemento == 2){
-        if(elemento.checked === true && elementoLista.checked === true){
-            alert ("Solo pude escoger: Productos mas vendidos o Productos menos vendidos" + "\n" + "No ambos")
-        }
-    }
-}
-
 consulPorPordMenosVend.onchange = function(){
     if (consulPorProdMasVend.checked === true){
         alert("Ya esta consultando por producto mas venedio, solo se puede escoger una opcion");
@@ -301,10 +306,13 @@ btnConsultar.onclick = function(){
         }
     }
     if(consulPorProducto.checked === true){
-        if(verificarConsulta(consulPorProducto, cualProducto, 1) == 0 || verificarConsulta(consulPorTipoProd, cualTipoProducto, 1) == 0){ 
+        if(verificarConsulta(consulPorProducto, cualProducto, 1) == 0){ 
+            return 0;
+        } 
+        if (verificarConsulta(consulPorTipoProd, cualTipoProducto, 1) == 0){
             return 0;
         }
-        if(verificarConsulta(consulPorProdMasVend, consulPorProdMasVend, 1) == 0){
+        if(verificarConsulta(consulPorProdMasVend, consulPorPordMenosVend, 2) == 0){
             return 0;
         }
     }
