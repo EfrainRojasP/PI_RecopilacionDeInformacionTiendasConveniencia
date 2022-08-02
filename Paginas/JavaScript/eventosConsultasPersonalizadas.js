@@ -43,26 +43,11 @@ var btnConsultar = document.getElementById("hacerConsulta");
 var btnCancelar = document.getElementById("cancelarConsulta")
 
 //Arreglo con el cual desactivamos elemento
-//var arrDesactivarElemento = [periodoDesde, periodoHasta, cualTienda, consulPorMun, cualMun, consulPorEnti, ];
-//Desactivamos los siguientes elemento
-//Desactivasmos los elementos del periodo
-periodoDesde.disabled = true;
-periodoHasta.disabled = true;
-//Desactivamos loes elemntos de la tienda
-cualTienda.disabled = true;
-consulPorMun.disabled = true;
-cualMun.disabled = true;
-consulPorEnti.disabled = true;
-cualEntidad.disabled = true;
-//Desactivasmos los elementos del prodcuto
-cualProducto.disabled = true;
-consulPorTipoProd.disabled = true;
-cualTipoProducto.disabled = true;
-consulPorProdMasVend.disabled = true;
-consulPorPordMenosVend.disabled = true;
-//Desactivamos los botones
-btnCancelar.disabled = true;
-btnConsultar.disabled = true;
+var arrDesactivarElemento = [periodoDesde, periodoHasta, cualTienda, consulPorMun, cualMun, consulPorEnti, cualEntidad, cualProducto, consulPorTipoProd, cualTipoProducto, consulPorProdMasVend, consulPorPordMenosVend, btnCancelar, btnConsultar];
+//Desactivamos los siguientes elementos
+for(var elemento of arrDesactivarElemento){
+    elemento.disabled = true;
+}
 
 
 var arrElementosTienda = [cualTienda, consulPorMun, consulPorEnti, cualMun, cualEntidad];
