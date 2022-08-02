@@ -115,6 +115,7 @@ function activarDesactivarConsulta(){
 //retun -> Un arreglo de las opciones seleccionadas
 function opcionesSeleccionadas(select){
     var arrOpciones = [];
+    console.log(select.options);
     for(var option of select.options){
         if(option.selected){
             arrOpciones.push(option.text);
@@ -224,10 +225,12 @@ consulPorTienda.onchange = function(){
         //Activamos los checkboxes de la seccion de la tienda
         activarDesctivarCheckboxesCalendarios(arrCheckboxTienda, 1);
         activarDesactivarConsulta();
+        añadirDescripcionConsulta("porTienda");
     } else {
         //Desactivamos toda la seccion de la tienda
         desactivarElementos(arrElementosTienda);
         activarDesactivarConsulta();
+        quitarDescripcionConsulta("porTienda");
     }
 }
 
@@ -308,39 +311,47 @@ btnConsultar.onclick = function(){
     }
 }
 
+//Añade un parrafo para los elementos que podemos selecionar
+function añadirDescripcionConsultaSelect(contenidoConsulta, idContenido, span, idSpan, txtContend){
+    contenidoConsulta.id = idContenido;
+    span.id = idSpan;
+    contenidoConsulta.textContent = txtContend;
+    tipoConsulta.appendChild(contenidoConsulta);
+    contenidoConsulta.appendChild(span);
+}
+
 //Escribimos el tipo de consulta en un parrafo
-/*var contenidoConsulta = document.createElement("p");
-contenidoConsulta.id = "contenidoDeConsulta";*/
-/*var tipoConsulta = document.getElementById("tipoDeconsulta");
-var contenidoConsulta = document.createElement("p");
-var hala = document.createElement("p");
-hala.textContent = "NUevo";
-contenidoConsulta.id = "porPerido";
-contenidoConsulta.textContent = "Tipo de predido: " + consultar + " - " + consultar;
-tipoConsulta.appendChild(hala);
-tipoConsulta.appendChild(contenidoConsulta);
-tipoConsulta.removeChild(document.getElementById("porPerido"));*/
 function añadirDescripcionConsulta(id){
     var contenidoConsulta = document.createElement("p");
-    var fechaDesde = document.createElement("span");
-    var fechaHasta = document.createElement("span");
+    var newSpan1 = document.createElement("span");
+    var newSpan2 = document.createElement("span");
     if(id == "porPeriodo"){
         contenidoConsulta.id = id;
-        fechaDesde.id = "fechaDesde"
-        fechaHasta.id = "fechaHasta"
+        newSpan1.id = "fechaDesde"
+        newSpan2.id = "fechaHasta"
         contenidoConsulta.textContent = "Periodo de tiempo: ";
-        fechaDesde.textContent = periodoDesde.value;
-        fechaHasta.textContent = " - " + periodoHasta.value;
+        newSpan1.textContent = periodoDesde.value;
+        newSpan2.textContent = " - " + periodoHasta.value;
         tipoConsulta.appendChild(contenidoConsulta);
-        contenidoConsulta.appendChild(fechaDesde);
-        contenidoConsulta.appendChild(fechaHasta);
-    }
+        contenidoConsulta.appendChild(newSpan1);
+        contenidoConsulta.appendChild(newSpan2);
+    } else if (id == "porTienda"){
+        añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantasTiendas", "Tienda(s): ");
+    } else if (id == "porMunAlca"){
+        añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantosMunAlca", "Municipio(s)/Alcaldia(s): ");
+    } else if (id == "porEntidad"){
+        añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantasEntidades", "Entidad(es): ");
+    } else if (id == "porProducto"){
+        añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantosProductos", "Producto(s): ");
+    } else if (id == "porTipoProducto"){
+        añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantosTipoProd", "Tipo de producto(s): ");
+    } /*else if (id == "porProducoMas"){
+
+    } else if (id == "porProductoMenos")*/
 }
 
 function quitarDescripcionConsulta(id){
-    if(id == "porPeriodo"){
-        tipoConsulta.removeChild(document.getElementById(id));
-    }
+    tipoConsulta.removeChild(document.getElementById(id));
 }
 
 periodoDesde.onchange = function(){
@@ -354,3 +365,14 @@ periodoHasta.onchange = function(){
     fechaHasta.textContent = " - " + periodoHasta.value;
     //fechaHasta.appendChild(fechaDesde);
 }
+
+cualTienda.onchange = function(){
+    var spanTienda = document.getElementById("cuantasTiendas");
+    var tiendas = opcionesSeleccionadas(cualTienda);
+    if(tiendas.length > 1){
+        spanTienda.textContent = tiendas.length + " tiendas seleccionadas"
+    } else if(tiendas.length == 1) {
+        spanTienda.textContent = tiendas[0];
+    }
+}
+
