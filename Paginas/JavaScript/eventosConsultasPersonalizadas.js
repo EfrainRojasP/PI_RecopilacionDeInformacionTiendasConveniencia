@@ -337,14 +337,19 @@ function añadirDescripcionConsulta(id){
         contenidoConsulta.appendChild(newSpan2);
     } else if (id == "porTienda"){
         añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantasTiendas", "Tienda(s): ");
+        añadirLosElementosSeleccionados("cuantasTiendas", cualTienda, " tiendas seleccionadas");
     } else if (id == "porMunAlca"){
         añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantosMunAlca", "Municipio(s)/Alcaldia(s): ");
+        añadirLosElementosSeleccionados("cuantasTiendas", cualTienda, " tiendas seleccionadas");
     } else if (id == "porEntidad"){
         añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantasEntidades", "Entidad(es): ");
+        añadirLosElementosSeleccionados("cuantasTiendas", cualTienda, " tiendas seleccionadas");
     } else if (id == "porProducto"){
         añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantosProductos", "Producto(s): ");
+        añadirLosElementosSeleccionados("cuantasTiendas", cualTienda, " tiendas seleccionadas");
     } else if (id == "porTipoProducto"){
         añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantosTipoProd", "Tipo de producto(s): ");
+        añadirLosElementosSeleccionados("cuantasTiendas", cualTienda, " tiendas seleccionadas");
     } /*else if (id == "porProducoMas"){
 
     } else if (id == "porProductoMenos")*/
@@ -383,6 +388,8 @@ function añadirLosElementosSeleccionados(id, select, texto){
         span.textContent = select.length + texto
     } else if(arrElementosSelecionados.length == 1) {
         span.textContent = arrElementosSelecionados[0];
+    } else if (arrElementosSelecionados.length == 0){
+        span.textContent = "";
     }
 }
 
