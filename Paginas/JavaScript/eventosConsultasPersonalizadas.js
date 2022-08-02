@@ -13,6 +13,8 @@ class ConsultaParametros{
 //Apuntador a la calse
 var consultar = new ConsultaParametros();
 
+var tipoConsulta = document.getElementById("tipoDeconsulta");
+
 //Consultas por periodo
 var consulPorPeriodo = document.getElementById("consulPorPeriodo");
 var periodoDesde = document.getElementById("periodoDesde");
@@ -206,10 +208,12 @@ consulPorPeriodo.onchange = function(){
         activarDesctivarCheckboxesCalendarios(arrCalendario, 1);
         arrCalendario[1].setAttribute("required", "");
         activarDesactivarConsulta();
+        añadirDescripcionConsulta("porPeriodo");
     } else {
         //Desactivamos los calendarios de la seccion del periodo
         activarDesctivarCheckboxesCalendarios(arrCalendario, 0);
         activarDesactivarConsulta();
+        quitarDescripcionConsulta("porPeriodo")
     }
 };
 
@@ -252,6 +256,7 @@ consulPorProducto.onchange = function(){
 consulPorTipoProd.onchange = function(){
     activarDesactivarListas(consulPorTipoProd, cualTipoProducto);
 };
+
 
 consulPorPordMenosVend.onchange = function(){
     if (consulPorProdMasVend.checked === true){
@@ -301,7 +306,51 @@ btnConsultar.onclick = function(){
             return 0;
         }
     }
-    console.log(consultar);
-    alert("Espera");
 }
 
+//Escribimos el tipo de consulta en un parrafo
+/*var contenidoConsulta = document.createElement("p");
+contenidoConsulta.id = "contenidoDeConsulta";*/
+/*var tipoConsulta = document.getElementById("tipoDeconsulta");
+var contenidoConsulta = document.createElement("p");
+var hala = document.createElement("p");
+hala.textContent = "NUevo";
+contenidoConsulta.id = "porPerido";
+contenidoConsulta.textContent = "Tipo de predido: " + consultar + " - " + consultar;
+tipoConsulta.appendChild(hala);
+tipoConsulta.appendChild(contenidoConsulta);
+tipoConsulta.removeChild(document.getElementById("porPerido"));*/
+function añadirDescripcionConsulta(id){
+    var contenidoConsulta = document.createElement("p");
+    var fechaDesde = document.createElement("span");
+    var fechaHasta = document.createElement("span");
+    if(id == "porPeriodo"){
+        contenidoConsulta.id = id;
+        fechaDesde.id = "fechaDesde"
+        fechaHasta.id = "fechaHasta"
+        contenidoConsulta.textContent = "Periodo de tiempo: ";
+        fechaDesde.textContent = periodoDesde.value;
+        fechaHasta.textContent = " - " + periodoHasta.value;
+        tipoConsulta.appendChild(contenidoConsulta);
+        contenidoConsulta.appendChild(fechaDesde);
+        contenidoConsulta.appendChild(fechaHasta);
+    }
+}
+
+function quitarDescripcionConsulta(id){
+    if(id == "porPeriodo"){
+        tipoConsulta.removeChild(document.getElementById(id));
+    }
+}
+
+periodoDesde.onchange = function(){
+    var fechaDesde = document.getElementById("fechaDesde");
+    fechaDesde.textContent = periodoDesde.value;
+    //fechaDesde.appendChild(fechaDesde);
+}
+
+periodoHasta.onchange = function(){
+    var fechaHasta = document.getElementById("fechaHasta");
+    fechaHasta.textContent = " - " + periodoHasta.value;
+    //fechaHasta.appendChild(fechaDesde);
+}
