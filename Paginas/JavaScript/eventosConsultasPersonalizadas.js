@@ -237,11 +237,21 @@ consulPorTienda.onchange = function(){
 //Evento para el checkbox de la para la consulta por entidad
 consulPorEnti.onchange = function(){
     activarDesactivarListas(consulPorEnti, cualEntidad);
+    if(consulPorEnti.checked === true){
+        añadirDescripcionConsulta("porEntidad");
+    } else {
+        quitarDescripcionConsulta("porEntidad");
+    }
 }
 
 //Evento para el checkbox de la para la consulta por municipio/alcaldia
 consulPorMun.onchange = function(){
     activarDesactivarListas(consulPorMun, cualMun);
+    if(consulPorMun.checked === true){
+        añadirDescripcionConsulta("porMunAlca");
+    } else {
+        quitarDescripcionConsulta("porMunAlca");
+    }
 }
 
 //Evento para el checkbox del producto
@@ -249,15 +259,21 @@ consulPorProducto.onchange = function(){
     if(consulPorProducto.checked === true){
         activarDesctivarCheckboxesCalendarios(arrCheckboxProducto, 1);
         activarDesactivarConsulta();
+        añadirDescripcionConsulta("porProducto");
     } else {
         desactivarElementos(arrElementosProducto);
-        activarDesactivarConsulta();
+        quitarDescripcionConsulta("porProducto");
     }
 }
 
 //Evento para el checkbox de la consulta por tipo de pruducto
 consulPorTipoProd.onchange = function(){
     activarDesactivarListas(consulPorTipoProd, cualTipoProducto);
+    if(consulPorTipoProd.checked === true){
+        añadirDescripcionConsulta("porTipoProducto");
+    } else {
+        quitarDescripcionConsulta("porTipoProducto");
+    }
 };
 
 
@@ -337,19 +353,20 @@ function añadirDescripcionConsulta(id){
         contenidoConsulta.appendChild(newSpan2);
     } else if (id == "porTienda"){
         añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantasTiendas", "Tienda(s): ");
+                                        //idSpan          selected      El texto cuando se seleeciona mas de un elemento
         añadirLosElementosSeleccionados("cuantasTiendas", cualTienda, " tiendas seleccionadas");
     } else if (id == "porMunAlca"){
         añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantosMunAlca", "Municipio(s)/Alcaldia(s): ");
-        añadirLosElementosSeleccionados("cuantasTiendas", cualTienda, " tiendas seleccionadas");
+        añadirLosElementosSeleccionados("cuantosMunAlca", cualMun, " Municipio(s)/Alcaldia(s) seleccionados");
     } else if (id == "porEntidad"){
         añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantasEntidades", "Entidad(es): ");
-        añadirLosElementosSeleccionados("cuantasTiendas", cualTienda, " tiendas seleccionadas");
+        añadirLosElementosSeleccionados("cuantasEntidades", cualEntidad, " Entidad(es) seleccionadas");
     } else if (id == "porProducto"){
         añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantosProductos", "Producto(s): ");
-        añadirLosElementosSeleccionados("cuantasTiendas", cualTienda, " tiendas seleccionadas");
+        añadirLosElementosSeleccionados("cuantosProductos", cualProducto, " Producto(s) seleccionados");
     } else if (id == "porTipoProducto"){
-        añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantosTipoProd", "Tipo de producto(s): ");
-        añadirLosElementosSeleccionados("cuantasTiendas", cualTienda, " tiendas seleccionadas");
+        añadirDescripcionConsultaSelect(contenidoConsulta, id, newSpan1, "cuantosTipoProd", "Tipo(s) de producto(s): ");
+        añadirLosElementosSeleccionados("cuantosTipoProd", cualTipoProducto, " Tipo(s) de producto(s) seleccionados");
     } /*else if (id == "porProducoMas"){
 
     } else if (id == "porProductoMenos")*/
@@ -375,6 +392,21 @@ cualTienda.onchange = function(){
     añadirLosElementosSeleccionados("cuantasTiendas", cualTienda, " tiendas seleccionadas");
 }
 
+cualMun.onchange = function(){
+    añadirLosElementosSeleccionados("cuantosMunAlca", cualMun, " Municipio(s)/Alcaldia(s) seleccionados");
+}
+
+cualEntidad.onchange = function(){
+    añadirLosElementosSeleccionados("cuantasEntidades", cualEntidad, " Entidad(es) seleccionadas");
+}
+
+cualProducto.onchange = function (){
+    añadirLosElementosSeleccionados("cuantosProductos", cualProducto, " Producto(s) seleccionados");
+}
+
+cualTipoProducto.onchange = function (){
+    añadirLosElementosSeleccionados("cuantosTipoProd", cualTipoProducto, " Tipo(s) de producto(s) seleccionados");
+}
 /*
 Añade los elementos selecciondos de una lista o de un selected
 id -> id Del span
