@@ -261,6 +261,7 @@ consulPorProducto.onchange = function(){
         activarDesactivarConsulta();
         añadirDescripcionConsulta("porProducto");
     } else {
+        activarDesactivarConsulta();
         desactivarElementos(arrElementosProducto);
         quitarDescripcionConsulta("porProducto");
     }
@@ -293,7 +294,7 @@ consulPorProdMasVend.onchange = function(){
 }
 
 btnConsultar.onclick = function(){
-    console.log(opcionesSeleccionadas(cualEntidad));
+    //console.log(opcionesSeleccionadas(cualEntidad));
     if(consulPorPeriodo.checked === true){
         if(verificarConsulta(periodoDesde, 0, 0) == 0 || verificarConsulta(periodoHasta, 0, 0) == 0){
             return 0;
