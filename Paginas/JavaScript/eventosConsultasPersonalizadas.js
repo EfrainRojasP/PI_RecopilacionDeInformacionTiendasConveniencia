@@ -367,12 +367,22 @@ periodoHasta.onchange = function(){
 }
 
 cualTienda.onchange = function(){
-    var spanTienda = document.getElementById("cuantasTiendas");
-    var tiendas = opcionesSeleccionadas(cualTienda);
-    if(tiendas.length > 1){
-        spanTienda.textContent = tiendas.length + " tiendas seleccionadas"
-    } else if(tiendas.length == 1) {
-        spanTienda.textContent = tiendas[0];
+    añadirLosElementosSeleccionados("cuantasTiendas", cualTienda, " tiendas seleccionadas");
+}
+
+/*
+Añade los elementos selecciondos de una lista o de un selected
+id -> id Del span
+select -> Es la lista o el elemento select que desamos saber cuantos elemetos selecciono el usario
+texto -> Es el texto que aparecera en el span
+*/
+function añadirLosElementosSeleccionados(id, select, texto){
+    var span = document.getElementById(id);
+    var arrElementosSelecionados = opcionesSeleccionadas(select);
+    if(arrElementosSelecionados.length > 1){
+        span.textContent = select.length + texto
+    } else if(arrElementosSelecionados.length == 1) {
+        span.textContent = arrElementosSelecionados[0];
     }
 }
 
